@@ -1,17 +1,25 @@
-
+/*
+Name: Yin Lam Lai
+PID: A15779757
+ */
 
 public class Startup {
+    private static final int DIVIDER = 2, SHIFT_LEFT = 10,  NUM_COLUMNS = 3,
+            NUM_IN_COLUMNS = 4, NUM_ROWS = 3, NUM_IN_ROWS = 3,
+            rowPattern_MAKER = 3, COLUMN_PATTERN_MAKER = 3, EVEN_CHECKER = 2,
+            TWO_SPACER = 2;
+
     public static void main(String[] args) {
-        //System.out.print(drawPattern(5));
+        //System.out.print(numpadSRC(0123));
     }
     // QUESTION 1
     public static char[] arrEvenOdd(int[] arr) {
-        int divider, arrayPlace;
-        divider = 2;
+        int arrayPlace;
+
         arrayPlace = 0;
         char[] result = new char[arr.length];
         for (int number: arr) {
-            if (number % divider == 0) {
+            if (number % DIVIDER == 0) {
                 result[arrayPlace] = 'E';
             } else {
                 result[arrayPlace] = 'O';
@@ -43,43 +51,41 @@ public class Startup {
     // QUESTION 3
 
     public static boolean numpadSRC(int num) {
-        int shiftLeft, arrayLen, numCopy, numColumns, numInColumns,
-                numRows, numInRows, columnPattern, rowPattern,
-                rowPatternMaker, countNumInColumns, firstNum;
-        shiftLeft = 10; arrayLen = 0; numCopy = num; numColumns = 3;
-        numInColumns = 4; numRows = 3; numInRows = 3;
-        rowPatternMaker = 3; columnPattern = 3;
-        if (num < 10) {
+        int arrayLen, numCopy, countNumInColumns, firstNum, rowPattern;
+        arrayLen = 0; numCopy = num;
+        
+
+        if (num < SHIFT_LEFT) {
             return true;
         }
         while (numCopy > 0) {
-            numCopy = numCopy / shiftLeft;
+            numCopy = numCopy / SHIFT_LEFT;
             arrayLen++;
         }
         int[] numArray = new int[arrayLen];
 
         for (int n = 0; n != arrayLen; n++) {
-            numArray[n] = num % shiftLeft;
-            num = num / shiftLeft;
+            numArray[n] = num % SHIFT_LEFT;
+            num = num / SHIFT_LEFT;
         }
-        int[][] columns = new int[numColumns][numInColumns];
-        int[][] rows = new int[numRows][numInRows];
+        int[][] columns = new int[NUM_COLUMNS][NUM_IN_COLUMNS];
+        int[][] rows = new int[NUM_ROWS][NUM_IN_ROWS];
 
-        for (int columnArray = 0; columnArray < numColumns; columnArray++) {
-            for (int columnArrayPlace = 1; columnArrayPlace < numInColumns; columnArrayPlace++) {
-                int columnNum = columnArray + 1 + ((columnArrayPlace - 1) * columnPattern);
+        for (int columnArray = 0; columnArray < NUM_COLUMNS; columnArray++) {
+            for (int columnArrayPlace = 1; columnArrayPlace < NUM_IN_COLUMNS; columnArrayPlace++) {
+                int columnNum = columnArray + 1 + ((columnArrayPlace - 1) * COLUMN_PATTERN_MAKER);
                 columns[columnArray][columnArrayPlace] = columnNum;
             }
         }
-        for (int rowArray = 0; rowArray < numRows; rowArray++) {
-            rowPattern = rowArray * rowPatternMaker;
-            for (int rowArrayPlace = 1; rowArrayPlace < numInRows + 1; rowArrayPlace++) {
+        for (int rowArray = 0; rowArray < NUM_ROWS; rowArray++) {
+            rowPattern = rowArray * rowPattern_MAKER;
+            for (int rowArrayPlace = 1; rowArrayPlace < NUM_IN_ROWS + 1; rowArrayPlace++) {
                 int rowNumber = rowArrayPlace + rowPattern;
                 rows[rowArray][rowArrayPlace - 1] = rowNumber;
             }
         }
         firstNum = numArray[numArray.length - 1];
-        int[] correctColumn = new int[numInColumns];
+        int[] correctColumn = new int[NUM_IN_COLUMNS];
         countNumInColumns = 0;
 
         for (int[] columnArrays: columns) {
@@ -100,7 +106,7 @@ public class Startup {
         if (countNumInColumns == numArray.length) {
             return true;
         }
-        int[] correctRow = new int[3]; int countNumInRows = 0;
+        int[] correctRow = new int[NUM_ROWS]; int countNumInRows = 0;
         for (int[] row: rows) {
             for (int number: row) {
                 if (number == firstNum) {
@@ -277,23 +283,20 @@ public class Startup {
 
     //QUESTION 8
     public static String drawPattern(int width) {
-        int evenChecker, goingUp, twoSpacer, goingDownSpace, goingUpSpace, goingDown, starAmountMax;
-
-        evenChecker = 2;
-        twoSpacer = 2;
+        int goingUp, goingDownSpace, goingUpSpace, goingDown, starAmountMax;
 
         if (width == 0) {
             return "";
         }
-        if (width % evenChecker == 1) {
+        if (width % EVEN_CHECKER == 1) {
             width++;
         }
 
-        goingDownSpace = width - twoSpacer;
-        goingUpSpace = twoSpacer;
+        goingDownSpace = width - TWO_SPACER;
+        goingUpSpace = TWO_SPACER;
         goingDown = 1;
-        goingUp = (width / twoSpacer) - 1;
-        starAmountMax = width / twoSpacer;
+        goingUp = (width / TWO_SPACER) - 1;
+        starAmountMax = width / TWO_SPACER;
         String resultString = "";
 
         while (goingDown <= starAmountMax) {
@@ -301,14 +304,14 @@ public class Startup {
                     + new String(new char[goingDownSpace]).replace("\0", " ")
                     + new String(new char[goingDown]).replace("\0", "*") + "\n";
 
-            goingDownSpace -= twoSpacer;
+            goingDownSpace -= TWO_SPACER;
             goingDown += 1;
         }
         while (goingUp >= 0) {
             resultString += new String(new char[goingUp]).replace("\0", "*")
                     + new String(new char[goingUpSpace]).replace("\0", " ")
                     + new String(new char[goingUp]).replace("\0", "*") + "\n";
-            goingUpSpace += twoSpacer;
+            goingUpSpace += TWO_SPACER;
             goingUp--;
         }
         return resultString;
