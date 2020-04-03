@@ -6,7 +6,7 @@ PID: A15779757
 public class Startup {
     private static final int DIVIDER = 2, SHIFT_LEFT = 10,  NUM_COLUMNS = 3,
             NUM_IN_COLUMNS = 4, NUM_ROWS = 3, NUM_IN_ROWS = 3,
-            rowPattern_MAKER = 3, COLUMN_PATTERN_MAKER = 3, EVEN_CHECKER = 2,
+            ROW_PATTERN_MAKER = 3, COLUMN_PATTERN_MAKER = 3, EVEN_CHECKER = 2,
             TWO_SPACER = 2;
 
     public static void main(String[] args) {
@@ -78,7 +78,7 @@ public class Startup {
             }
         }
         for (int rowArray = 0; rowArray < NUM_ROWS; rowArray++) {
-            rowPattern = rowArray * rowPattern_MAKER;
+            rowPattern = rowArray * ROW_PATTERN_MAKER;
             for (int rowArrayPlace = 1; rowArrayPlace < NUM_IN_ROWS + 1; rowArrayPlace++) {
                 int rowNumber = rowArrayPlace + rowPattern;
                 rows[rowArray][rowArrayPlace - 1] = rowNumber;
